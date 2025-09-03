@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscrição Pedal 100 Fronteiras</title>
+  <style>
+    body { font-family: Arial; padding: 30px; background: #f0f0f0; }
+    form { background: white; padding: 20px; border-radius: 8px; max-width: 500px; }
+    input, select { width: 100%; margin-top: 10px; padding: 8px; }
+    button { margin-top: 15px; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 5px; }
+    .mensagem { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h1>Lista de Inscrição da Manutenção 2025 - Pedal 100 Fronteiras</h1>
+
+<form id="formInscricao">
+  <input type="text" name="Nome" placeholder="Nome" required>
+  <input type="email" name="Email" placeholder="Email" required>
+  <input type="text" name="Telefone" placeholder="Telefone" required>
+  <select name="Modalidade" required>
+    <option value="">Escolha a modalidade</option>
+    <option value="Intermediário">Intermediário</option>
+    <option value="Iniciante">Iniciante</option>
+  </select>
+  <button type="submit">Enviar</button>
+</form>
+
+<div class="mensagem" id="mensagem"></div>
+
+<script>
+  const form = document.getElementById("formInscricao");
+  const mensagem = document.getElementById("mensagem");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const url = "https://script.google.com/macros/s/AKfycbwbNo4bqlJQSFPCK19yAHAyL1Mm1YCOIR5QTv-cbzjmAyYCcyJ4TKrpZYC8B78Cqt72Sg/exec"; // substitua pela URL gerada no Apps Script
+
+    fetch(url, {
+      method: "POST",
+      body: data
+    })
+    .then(response => response.json())
+    .then(json => {
+      if (json.result === "success") {
+        mensagem.innerText = "Inscrição enviada com sucesso!";
+        form.reset();
+      } else {
+        mensagem.innerText = "Erro ao enviar inscrição.";
+      }
+    })
+    .catch(err => {
+      mensagem.innerText = "Erro de conexão.";
+      console.error(err);
+    });
+  });
+</script>
+
+</body>
+</html>
